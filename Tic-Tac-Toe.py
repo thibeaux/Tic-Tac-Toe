@@ -1,6 +1,6 @@
 #Variables
 square = []
-square = ["_" for x in range(10)] 
+square = [" " for x in range(10)] 
 #gameInSession = True
 isUserTurn = True
 
@@ -40,6 +40,13 @@ def CheckTurn(UserTurn):
         UserTurn = True
     return UserTurn
 
+def isBoardFull():
+    #print("Square Count: " ,square.count(" "))#DEBUGGING LINE
+    if square.count(" ") <= 1:
+        return True
+    return False
+    
+    
 def WinningSequences():
     winner = ""
     gameInSession = True
@@ -55,7 +62,7 @@ def WinningSequences():
     elif square[2] == 'X' and square[5] == 'X' and square[8] == 'X': winner = "X"
     elif square[3] == 'X' and square[6] == 'X' and square[9] == 'X': winner = "X"
     #Team O Victory
-    if square[1] == 'O' and square[5] == 'O' and square[9] == 'O': winner = "O"
+    elif square[1] == 'O' and square[5] == 'O' and square[9] == 'O': winner = "O"
     elif square[3] == 'O' and square[5] == 'O' and square[7] == 'O': winner = "O"
     #Stright Horizontal Win for Team X
     elif square[1] == 'O' and square[2] == 'O' and square[3] == 'O': winner = "O"
@@ -65,6 +72,11 @@ def WinningSequences():
     elif square[1] == 'O' and square[4] == 'O' and square[7] == 'O': winner = "O"
     elif square[2] == 'O' and square[5] == 'O' and square[8] == 'O': winner = "O"
     elif square[3] == 'O' and square[6] == 'O' and square[9] == 'O': winner = "O"
+    #Draw game
+    elif isBoardFull() == True:
+        print("Draw! Game over")
+        gameInSession = False
+        return gameInSession
     
     if winner == "O":
         print(" O Wins!!")
@@ -81,7 +93,7 @@ def WinningSequences():
 #main
 #Init secetion
 DrawBoard()
-print(WinningSequences())
+#print(WinningSequences())
 while WinningSequences() == True:
     #take user input 
     #print("Main section output ",UserInput()) #DEBUGGING LINE
@@ -95,3 +107,4 @@ while WinningSequences() == True:
     #check to see whos turn
     if WinningSequences == True and isUserTurn == False:
         print("It is computer's turn!")
+
