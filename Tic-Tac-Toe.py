@@ -21,17 +21,17 @@ def DrawBoard():
 
 def UpdateBoard(typeChar,pos):
     #print("UpdateBoard pointers contain: typeChar: ", typeChar, "pos: ", pos)#DEBUGGING LINE
-    
     square[int(pos)] = typeChar
     DrawBoard()
 
 def UserInput():
-    chara, pos = input("Enter a value from 1-9: ").split() 
-    chara = chara.upper()
-    print("Charachter: ", chara)
-    print("Columns number: ", pos) 
-    print() 
-    return chara, pos
+    pos = input("Enter a position value 1-9: ") 
+    #chara = chara.upper()
+    
+    #print("Charachter: ", chara)
+    #print("Columns number: ", pos) 
+    #print() 
+    return pos
 
 def CheckTurn(UserTurn):
     if UserTurn == True:
@@ -39,7 +39,12 @@ def CheckTurn(UserTurn):
     else:
         UserTurn = True
     return UserTurn
-
+    
+def XOToggle():
+    if isUserTurn == True:
+        return "X"
+    else:
+        return "O"
 def isBoardFull():
     #print("Square Count: " ,square.count(" "))#DEBUGGING LINE
     if square.count(" ") <= 1:
@@ -97,14 +102,13 @@ DrawBoard()
 while WinningSequences() == True:
     #take user input 
     #print("Main section output ",UserInput()) #DEBUGGING LINE
-    typeChar,pos = UserInput()
-
+    pos = UserInput()
     #update the game
     #print("Main section output, UserInput returns : ", typeChar, " ", pos) #DEBUGGING LINE
-    UpdateBoard(typeChar,pos)
+    UpdateBoard(XOToggle(),pos)
     WinningSequences()
     isUserTurn = CheckTurn(isUserTurn)
+    print(XOToggle(), "'s turn...")
     #check to see whos turn
     if WinningSequences == True and isUserTurn == False:
         print("It is computer's turn!")
-
