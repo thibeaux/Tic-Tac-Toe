@@ -25,7 +25,17 @@ def UpdateBoard(typeChar,pos):
     DrawBoard()
 
 def UserInput():
-    pos = input("Enter a position value 1-9: ") 
+    pos=0
+    while True:
+        try:
+            while not int(pos) in range(1,10):
+                pos = int(input("Enter a position value 1-9: "))      
+        except ValueError:
+            print("Not an integer between 1-9. Try again.")
+            continue
+        else:
+            return pos
+            break 
     #chara = chara.upper()
     
     #print("Charachter: ", chara)
@@ -45,12 +55,12 @@ def XOToggle():
         return "X"
     else:
         return "O"
+
 def isBoardFull():
     #print("Square Count: " ,square.count(" "))#DEBUGGING LINE
     if square.count(" ") <= 1:
         return True
     return False
-    
     
 def WinningSequences():
     winner = ""
@@ -109,6 +119,3 @@ while WinningSequences() == True:
     WinningSequences()
     isUserTurn = CheckTurn(isUserTurn)
     print(XOToggle(), "'s turn...")
-    #check to see whos turn
-    if WinningSequences == True and isUserTurn == False:
-        print("It is computer's turn!")
