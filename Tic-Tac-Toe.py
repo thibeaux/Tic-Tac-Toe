@@ -1,7 +1,7 @@
 #Variables
 square = []
-square = ["_" for x in range(10)] 
-#gameInSession = True
+square = [" " for x in range(10)] 
+pos = 0
 isUserTurn = True
 
 #functions
@@ -21,17 +21,27 @@ def DrawBoard():
 
 def UpdateBoard(typeChar,pos):
     #print("UpdateBoard pointers contain: typeChar: ", typeChar, "pos: ", pos)#DEBUGGING LINE
-    
     square[int(pos)] = typeChar
     DrawBoard()
 
 def UserInput():
-    chara, pos = input("Enter a value from 1-9: ").split() 
-    chara = chara.upper()
-    print("Charachter: ", chara)
-    print("Columns number: ", pos) 
-    print() 
-    return chara, pos
+    pos=0
+    while True:
+        try:
+            while not int(pos) in range(1,10):
+                pos = int(input("Enter a position value 1-9: "))      
+        except ValueError:
+            print("Not an integer between 1-9. Try again.")
+            continue
+        else:
+            return pos
+            break 
+    #chara = chara.upper()
+    
+    #print("Charachter: ", chara)
+    #print("Columns number: ", pos) 
+    #print() 
+    return pos
 
 def CheckTurn(UserTurn):
     if UserTurn == True:
@@ -39,7 +49,19 @@ def CheckTurn(UserTurn):
     else:
         UserTurn = True
     return UserTurn
+    
+def XOToggle():
+    if isUserTurn == True:
+        return "X"
+    else:
+        return "O"
 
+def isBoardFull():
+    #print("Square Count: " ,square.count(" "))#DEBUGGING LINE
+    if square.count(" ") <= 1:
+        return True
+    return False
+    
 def WinningSequences():
     winner = ""
     gameInSession = True
@@ -55,7 +77,7 @@ def WinningSequences():
     elif square[2] == 'X' and square[5] == 'X' and square[8] == 'X': winner = "X"
     elif square[3] == 'X' and square[6] == 'X' and square[9] == 'X': winner = "X"
     #Team O Victory
-    if square[1] == 'O' and square[5] == 'O' and square[9] == 'O': winner = "O"
+    elif square[1] == 'O' and square[5] == 'O' and square[9] == 'O': winner = "O"
     elif square[3] == 'O' and square[5] == 'O' and square[7] == 'O': winner = "O"
     #Stright Horizontal Win for Team X
     elif square[1] == 'O' and square[2] == 'O' and square[3] == 'O': winner = "O"
@@ -65,6 +87,11 @@ def WinningSequences():
     elif square[1] == 'O' and square[4] == 'O' and square[7] == 'O': winner = "O"
     elif square[2] == 'O' and square[5] == 'O' and square[8] == 'O': winner = "O"
     elif square[3] == 'O' and square[6] == 'O' and square[9] == 'O': winner = "O"
+    #Draw game
+    elif isBoardFull() == True:
+        print("Draw! Game over")
+        gameInSession = False
+        return gameInSession
     
     if winner == "O":
         print(" O Wins!!")
@@ -77,21 +104,35 @@ def WinningSequences():
     else:
         gameInSession = True
         return gameInSession
+        
+def SqaureIsTaken (chk):
+    location = pos 
+    newPos = 0 
+     
+    if chk == True:
+        while square[location] == "X" or square[location] == "O":
+            print ("This square was already taken. Please choose a different square.") 
+            newPos = UserInput () 
+            if square[newPos] == " ":
+                chk = False 
+                break
+    return newPos
 
 #main
 #Init secetion
 DrawBoard()
-print(WinningSequences())
+#print(WinningSequences())
 while WinningSequences() == True:
     #take user input 
     #print("Main section output ",UserInput()) #DEBUGGING LINE
-    typeChar,pos = UserInput()
-
+    pos = UserInput()
     #update the game
     #print("Main section output, UserInput returns : ", typeChar, " ", pos) #DEBUGGING LINE
-    UpdateBoard(typeChar,pos)
+    
+    if square[pos] == "X" or square[pos] == "O":
+       pos = SqaureIsTaken(True)
+    
+    UpdateBoard(XOToggle(),pos)
     WinningSequences()
     isUserTurn = CheckTurn(isUserTurn)
-    #check to see whos turn
-    if WinningSequences == True and isUserTurn == False:
-        print("It is computer's turn!")
+    print(XOToggle(), "'s turn...")
