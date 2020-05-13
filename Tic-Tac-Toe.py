@@ -7,17 +7,11 @@ isUserTurn = True
 #functions
 def DrawBoard():
     #variables
-    '''
-    square1 = square2 = square3 = " "
-    square4 = square5 = square6 = " "
-    square7 = square8 = square9 = " "
-    '''
-    
-    print(' ',square[1],'  |  ',square[2],'  |  ',square[3],' ')
+    print(' ',square[7],'  |  ',square[8],'  |  ',square[9],' ')
     print("------|-------|------")
     print(' ',square[4],'  |  ',square[5],'  |  ' ,square[6],' ')
     print("------|-------|------")
-    print(' ',square[7],'  |  ',square[8],'  |  ' ,square[9],' ')
+    print(' ',square[1],'  |  ',square[2],'  |  ' ,square[3],' ')
 
 def UpdateBoard(typeChar,pos):
     #print("UpdateBoard pointers contain: typeChar: ", typeChar, "pos: ", pos)#DEBUGGING LINE
