@@ -1,7 +1,7 @@
 #Variables
 square = []
 square = [" " for x in range(10)] 
-#gameInSession = True
+pos = 0
 isUserTurn = True
 
 #functions
@@ -104,6 +104,19 @@ def WinningSequences():
     else:
         gameInSession = True
         return gameInSession
+        
+def SqaureIsTaken (chk):
+    location = pos 
+    newPos = 0 
+     
+    if chk == True:
+        while square[location] == "X" or square[location] == "O":
+            print ("This square was already taken. Please choose a different square.") 
+            newPos = UserInput () 
+            if square[newPos] == " ":
+                chk = False 
+                break
+    return newPos
 
 #main
 #Init secetion
@@ -115,6 +128,10 @@ while WinningSequences() == True:
     pos = UserInput()
     #update the game
     #print("Main section output, UserInput returns : ", typeChar, " ", pos) #DEBUGGING LINE
+    
+    if square[pos] == "X" or square[pos] == "O":
+       pos = SqaureIsTaken(True)
+    
     UpdateBoard(XOToggle(),pos)
     WinningSequences()
     isUserTurn = CheckTurn(isUserTurn)
