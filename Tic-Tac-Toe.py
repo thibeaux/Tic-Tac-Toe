@@ -6,7 +6,11 @@ isUserTurn = True
 
 #functions
 def DrawBoard():
+
+    #Formats the game
+
     #variables
+
     print(' ',square[7],'  |  ',square[8],'  |  ',square[9],' ')
     print("------|-------|------")
     print(' ',square[4],'  |  ',square[5],'  |  ' ,square[6],' ')
@@ -14,11 +18,13 @@ def DrawBoard():
     print(' ',square[1],'  |  ',square[2],'  |  ' ,square[3],' ')
 
 def UpdateBoard(typeChar,pos):
-    #print("UpdateBoard pointers contain: typeChar: ", typeChar, "pos: ", pos)#DEBUGGING LINE
+    #Updates the board with two inputs, a character type (X or O) and a position
     square[int(pos)] = typeChar
     DrawBoard()
 
 def UserInput():
+    #Takes user input.
+    #This function checks to see if user has inputed a valid argument. It only accepts integers between 1 and 9. And also protects against character inputs with try/except. If a user inputs wrong data, then the program will loop this function until valid input is entered.
     pos=0
     while True:
         try:
@@ -30,14 +36,11 @@ def UserInput():
         else:
             return pos
             break 
-    #chara = chara.upper()
-    
-    #print("Charachter: ", chara)
-    #print("Columns number: ", pos) 
-    #print() 
+
     return pos
 
 def CheckTurn(UserTurn):
+	#Determines whos turn it is
     if UserTurn == True:
         UserTurn = False
     else:
@@ -45,13 +48,14 @@ def CheckTurn(UserTurn):
     return UserTurn
     
 def XOToggle():
+    #Toggles between X and O based on whether it is Users(X) turn or not
     if isUserTurn == True:
         return "X"
     else:
         return "O"
 
 def isBoardFull():
-    #print("Square Count: " ,square.count(" "))#DEBUGGING LINE
+    #This function is for checking if the board is full of X's and O's by counting how many squares have the space character
     if square.count(" ") <= 1:
         return True
     return False
@@ -86,7 +90,7 @@ def WinningSequences():
         print("Draw! Game over")
         gameInSession = False
         return gameInSession
-    
+    #Declare winner
     if winner == "O":
         print(" O Wins!!")
         gameInSession = False
@@ -95,38 +99,39 @@ def WinningSequences():
         print("X Wins!!")
         gameInSession = False
         return gameInSession
+    #No Winner Detected
     else:
         gameInSession = True
         return gameInSession
         
 def SqaureIsTaken (chk):
+	#Checks if square is taken. For example, if a user types in the number 5 and there is already a character there, the program will loop this function until player enters a new position that is valid or has a space character in it not a X or O.
     location = pos 
     newPos = 0 
      
     if chk == True:
-        while square[location] == "X" or square[location] == "O":
+        while square[location] == "X" or square[location] == "O": #tests sqaure containing X or O 
             print ("This square was already taken. Please choose a different square.") 
-            newPos = UserInput () 
-            if square[newPos] == " ":
+            newPos = UserInput () #promtps user for another square selection
+            if square[newPos] == " ":#test if input was valid, If true then breaks the loop
                 chk = False 
                 break
     return newPos
 
 #main
-#Init secetion
+#Initialization
 DrawBoard()
-#print(WinningSequences())
+
+#Game is in motion
 while WinningSequences() == True:
     #take user input 
-    #print("Main section output ",UserInput()) #DEBUGGING LINE
     pos = UserInput()
-    #update the game
-    #print("Main section output, UserInput returns : ", typeChar, " ", pos) #DEBUGGING LINE
     
+    #update the game
+    #IF statement tests to see if the input is a valid input by testing the contents of a square. If a square already has an X or O, then go to SquareIsTaken and store the return value into pos.
     if square[pos] == "X" or square[pos] == "O":
        pos = SqaureIsTaken(True)
-    
     UpdateBoard(XOToggle(),pos)
-    WinningSequences()
-    isUserTurn = CheckTurn(isUserTurn)
+    WinningSequences() #tests for winning sequences on board
+    isUserTurn = CheckTurn(isUserTurn)#checks whos turn it is
     print(XOToggle(), "'s turn...")
