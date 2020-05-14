@@ -6,7 +6,11 @@ isUserTurn = True
 
 #functions
 def DrawBoard():
+
     #Formats the game
+
+    #variables
+
     print(' ',square[7],'  |  ',square[8],'  |  ',square[9],' ')
     print("------|-------|------")
     print(' ',square[4],'  |  ',square[5],'  |  ' ,square[6],' ')
