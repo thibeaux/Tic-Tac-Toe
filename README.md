@@ -2,9 +2,9 @@
 This is a small single file game of Tic-Tac-Toe in python that takes user input in the terminal in order to play the game. The terminal syntax is to choose a position from 1-9 (top left box is 9, bottom right box is 1, just like your numberpad on your keyboard). Here is an example: >>9.
 
   (7) | (8)  | (9)  
---------------------
+
   (4) | (5)  | (6)  
---------------------
+ 
   (1) | (2)  | (3)
 
 # Tic-Tac-Toe future features and stuff in the works
